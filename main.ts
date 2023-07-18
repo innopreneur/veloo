@@ -3,7 +3,7 @@ import axios from "https://esm.sh/axios@1.3.4"
 import * as cron from "https://esm.sh/node-cron@3.0.2"
 
 dotenv.config()
-const veloTokenAddress = '0x3c8b650257cfb5f272f799f5e2b4e65093a11a05'
+const message = "Sending Alert - "
 const discordWebhook = Deno.env.get("DISCORD_WEBHOOK_URL")
 const targetPrice = Deno.env.get("TARGET_PRICE")
 const coingeckoUrl =
@@ -18,28 +18,40 @@ async function checkPrices() {
     if (priceResp.data[veloTokenAddress]['usd']) {
       const price = Number(priceResp.data[veloTokenAddress]['usd'])
       console.log('price : ', price)
-      if (price >= targetPrice) {
-        console.log('Price target triggered... Sending message')
-        const message = {
-          token: '$VELO',
-          price,
-        }
-
-        const params = {
-          username: 'Alerts',
-          avatar_url: '',
-          content: `@everyone ${JSON.stringify(message)}`,
-        }
-
-        axios.post(discordWebhook, JSON.stringify(params), {
-          headers: { 'Content-type': 'application/json' },
-        })
-      }
+      return price
     }
   }
 }
 
-cron.schedule('* * * * *', () => {
-    console.log("Invoked new job at - ", new Date())
-  checkPrices()
-});
+async function sendDiscordAlert(message: string, value: string | number) {
+    const params = {
+      message,
+      avatar_url: '',
+      content: `@everyone ${message} - ${value}`,
+    }
+
+    if (discordWebhook) {
+      axios.post(discordWebhook, JSON.stringify(params), {
+        headers: { 'Content-type': 'application/json' },
+      })
+    } else {
+      throw new Error(`Missing Discord Webhook Url`)
+    }
+  }
+
+function sleep(sec: number) {
+  return new Promise((resolve) => setTimeout(resolve, sec * 1000))
+}
+
+async function start(fnToRun, args) {
+  while (true) {
+    const val: any = await fnToRun.apply(null, ...(args as [any]))
+    //check if alert needs to be sent
+    if (val) {
+      await sendDiscordAlert(message, val)
+    }
+    await sleep(10)
+  }
+}
+
+start(checkPrices,[])
