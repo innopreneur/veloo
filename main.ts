@@ -1,6 +1,6 @@
-import dotenv from "https://esm.sh/dotenv@16.0.3"
-import axios from "https://esm.sh/axios@1.3.4"
-import * as cron from "https://esm.sh/node-cron@3.0.2"
+import dotenv from "npm:dotenv@16.0.3"
+import axios from "npm:axios@1.3.4"
+import * as cron from "npm:node-cron@3.0.2"
 
 dotenv.config()
 const veloTokenAddress = '0x9560e827af36c94d2ac33a39bce1fe78631088db'
