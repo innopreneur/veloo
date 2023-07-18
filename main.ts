@@ -3,6 +3,7 @@ import axios from "https://esm.sh/axios@1.3.4"
 import * as cron from "https://esm.sh/node-cron@3.0.2"
 
 dotenv.config()
+const veloTokenAddress = '0x3c8b650257cfb5f272f799f5e2b4e65093a11a05'
 const message = "Sending Alert - "
 const discordWebhook = Deno.env.get("DISCORD_WEBHOOK_URL")
 const targetPrice = Deno.env.get("TARGET_PRICE")
