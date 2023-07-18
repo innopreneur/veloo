@@ -4,7 +4,7 @@ import * as cron from "https://esm.sh/node-cron@3.0.2"
 
 dotenv.config()
 const veloTokenAddress = '0x9560e827af36c94d2ac33a39bce1fe78631088db'
-const message = "Sending Alert - "
+const message =`${new Date()} => Sending Alert : `
 const discordWebhook = Deno.env.get("DISCORD_WEBHOOK_URL")
 const targetPrice = Deno.env.get("TARGET_PRICE")
 const coingeckoUrl =
