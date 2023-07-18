@@ -40,7 +40,7 @@ async function sendDiscordAlert(message: string, value: string | number) {
     }
   }
 
-function sleep(sec: number) {
+async function sleep(sec: number) {
   return new Promise((resolve) => setTimeout(resolve, sec * 1000))
 }
 
