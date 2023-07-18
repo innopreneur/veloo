@@ -1,4 +1,4 @@
-import dotenv from "npm:dotenv@16.0.3"
+import dotenv from "npm:dotenv@16.3.1"
 import axios from "npm:axios@1.3.4"
 import * as cron from "npm:node-cron@3.0.2"
 
