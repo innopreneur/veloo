@@ -15,6 +15,7 @@ async function checkPrices() {
   const priceResp = await axios.get(coingeckoUrl)
   console.log('resp', priceResp.status)
   if (priceResp.status == 200) {
+    console.log('data:: ', priceResp.data)
     console.log('data', priceResp.data[veloTokenAddress])
     if (priceResp.data[veloTokenAddress]['usd']) {
       const price = Number(priceResp.data[veloTokenAddress]['usd'])
