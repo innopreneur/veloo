@@ -8,7 +8,7 @@ const message = "Sending Alert - "
 const discordWebhook = Deno.env.get("DISCORD_WEBHOOK_URL")
 const targetPrice = Deno.env.get("TARGET_PRICE")
 const coingeckoUrl =
-  'https://api.coingecko.com/api/v3/simple/token_price/optimistic-ethereum?contract_addresses=0x3c8b650257cfb5f272f799f5e2b4e65093a11a05&vs_currencies=usd'
+  `https://api.coingecko.com/api/v3/simple/token_price/optimistic-ethereum?contract_addresses=${veloTokenAddress}&vs_currencies=usd`
 
 
 async function checkPrices() {
